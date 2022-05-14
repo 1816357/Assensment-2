@@ -69,8 +69,8 @@ class AlienShipOne:
 	def collide(self, bullet):
 		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((bullet.x, bullet.y))
 
-	# def collides(self, ship):
-	# 	return pygame.Rect(self.x, self.y, 50, 50).collidepoint((ship.x, ship.y))
+	def collides(self, ship):
+		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((ship.x, ship.y))
 
 
 
@@ -88,6 +88,12 @@ class Player:
 
 		if pressed_keys[K_LEFT] and self.x > 0:
 			self.x -= 5
+
+		# if pressed_keys[K_UP] and self.y <SCREEN_HEIGHT - 60:
+		# 	self.x += 5
+		#
+		# if pressed_keys[K_DOWN] and self.y > 0:
+		# 	self.x -= 5
 
 		# if pressed_keys[K_SPACE]:
 		#
@@ -130,14 +136,15 @@ class Bullet:
 	def collide(self, ship):
 		return pygame.Rect (self.x,self.y, 50 ,50).collidepoint((ship.x, ship.y))
 
-	# def collides(self, player):
-	# 	return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
+	def collides(self, player):
+		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
 
 
 
 alienship = []
 bullets = []
 ships = []
+
 for i in range(1,10):
 	ships.append(AlienShipOne(10 + (i*75),0, 0.1))
 	ships.append(AlienShipOne(10 + (i*75),65, 0.1))
@@ -181,9 +188,14 @@ while 1:
 				bullets.remove(bullet)
 				ships.remove(ship)
 
+
+
+
 	for ship in ships:
 		ship.draw()
 		ship.move()
+
+
 
 
 
