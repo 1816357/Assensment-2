@@ -126,7 +126,7 @@ class Meteor:
 	def __init__(self, x, y):
 		self.x = x
 		self.y = y
-		self.speed = random.randint()
+		self.speed = random.randint(5, 14)
 
 	def move(self):
 		self.y += self.speed
@@ -141,18 +141,22 @@ class Asteroid:
 		self.y = y
 
 	def draw(self):
-		screen.blit(sc_img (self.x, self.y))
+		screen.blit(sc_img, (self.x, self.y))
 
-	def createmeteor(self):
-		meteors.append(Meteor, )
-
+	def create_meteor(self):
+		meteors.append(Meteor(random.randint(self.x + 80, self.x + 480), self.y + 250))
 
 
 
 alienship = []
+
 bullets = []
+
 ships = []
+
 meteors = []
+
+rocks1 = Asteroid(10, 50)
 
 for i in range(1, 10):
 	# ships.append(AlienShipOne(10 + (i * 75), -130, 1.5))
@@ -192,6 +196,8 @@ while 1:
 
 	screen.blit(stars_image_tr, (0, 0))
 
+	rocks1.create_meteor()
+
 	playerGroup.draw(screen)
 
 	for bullet in bullets:
@@ -206,7 +212,11 @@ while 1:
 		ship.draw()
 		ship.move()
 
+	for rock in meteors:
+		rock.draw()
+		rock.move()
 
+	rocks1.draw()
 
 
 
