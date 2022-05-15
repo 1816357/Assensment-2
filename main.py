@@ -136,7 +136,7 @@ class Meteor:
 
 class Asteroid:
 
-	def __int__(self, x, y):
+	def __init__(self, x, y):
 		self.x = x
 		self.y = y
 
@@ -145,7 +145,6 @@ class Asteroid:
 
 	def create_meteor(self):
 		meteors.append(Meteor(random.randint(self.x + 80, self.x + 480), self.y + 250))
-
 
 
 alienship = []
