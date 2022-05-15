@@ -126,13 +126,13 @@ class Meteor:
 	def __init__(self, x, y):
 		self.x = x
 		self.y = y
-		self.speed = random.randint(5, 14)
+		self.speed = random.randint(1, 2)
 
 	def move(self):
 		self.y += self.speed
 
 	def draw(self):
-		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), 2)
+		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), random.randint(30, 33))
 
 class Asteroid:
 
@@ -141,10 +141,10 @@ class Asteroid:
 		self.y = y
 
 	def draw(self):
-		screen.blit(sc_img, (self.x, self.y))
+		screen.blit(sc_img, (self.x, self.y - 150))
 
 	def create_meteor(self):
-		meteors.append(Meteor(random.randint(self.x + 80, self.x + 480), self.y + 250))
+		meteors.append(Meteor(random.randint(self.x + 0, self.x + 30000), self.y + 250))
 
 
 alienship = []
