@@ -32,19 +32,6 @@ clock = pygame.time.Clock()
 Ui_font = pygame.font.SysFont("arial", 25)
 
 
-# class Stars:
-# 	def __init__(self, x ,y):
-# 		self.x = x
-# 		self.y = y
-# 		self.velo1 = random.randint(1,10)
-# 		self.accel1 = random.randint(1, 10)
-#
-# 	def move(self):
-# 		self.y += self.accel1
-#
-# 	def draw(self):
-# 		pygame.draw.circle(screen, (150,150,150), (self.x, self.y), 2)
-
 class AlienShipOne:
 	def __init__(self, x, y, spd):
 		self.x = x
@@ -75,37 +62,27 @@ class AlienShipOne:
 
 
 
-
-class Player:
+class Player(pygame.sprite.Sprite):
 	def __init__(self):
-		self.x = 0
-		self.y = SCREEN_HEIGHT - 50
+		pygame.sprite.Sprite.__init__(self)
+		self.image = player_image
+		self.rect = self.image.get_rect()
+		self.rect.center = (480, 490)
 		self.health = 3
 
-	def move(self):
-		if pressed_keys[K_RIGHT] and self.x <SCREEN_WIDTH - 60:
-			self.x += 5
+	def update(self):
 
-		if pressed_keys[K_LEFT] and self.x > 0:
-			self.x -= 5
+		if pressed_keys[K_RIGHT] and self.rect.x <SCREEN_WIDTH - 60:
+			self.rect.x += 5
 
-		# if pressed_keys[K_UP] and self.y <SCREEN_HEIGHT - 60:
-		# 	self.x += 5
-		#
-		# if pressed_keys[K_DOWN] and self.y > 0:
-		# 	self.x -= 5
-
-		# if pressed_keys[K_SPACE]:
-		#
-		# 	pygame.draw.circle(screen, (150, 150, 150), (self.x + 30, self.y), 5)
-
-	def draw(self):
-		screen.blit(player_image, (self.x,self.y))
-
-		pygame.draw.rect(screen, (200, 0, 50), (10, 10, 20,self.health *100))
+		if pressed_keys[K_LEFT] and self.rect.x > 0:
+			self.rect.x -= 5
 
 	def createbullet(self):
-		bullets.append(Bullet(self.x + 30, self.y))
+		bullets.append(Bullet(self.rect.x + 30, self.rect.y))
+
+
+
 
 class Laser:
 	def __init__(self, x, y):
@@ -120,12 +97,14 @@ class Laser:
 	def draw(self):
 		pygame.draw.circle(screen, (150,150,150), (self.x, self.y), 2)
 
+
+
+
 class Bullet:
 
 	def __init__(self, x, y):
 		self.x = x
 		self.y = y
-
 
 	def move(self):
 		self.y -= 5
@@ -140,7 +119,6 @@ class Bullet:
 		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
 
 
-
 alienship = []
 bullets = []
 ships = []
@@ -150,6 +128,10 @@ for i in range(1,10):
 	ships.append(AlienShipOne(10 + (i*75),65, 0.1))
 
 player = Player()
+
+playerGroup = pygame.sprite.Group()
+
+playerGroup.add(player)
 
 
 while 1:
@@ -162,24 +144,19 @@ while 1:
 			player.createbullet()
 			bullet_sound.play()
 
-		# if event.type == pygame.KEYDOWN and event.key == pygame.K_0:
-		# # 	y += 2
 
 	pressed_keys = pygame.key.get_pressed()
+
+# Update
+	playerGroup.update()
+
+# Rendering
 	screen.fill(BACKGD_COLOUR)
+
 	screen.blit(stars_image_tr, (0, 0))
 
+	playerGroup.draw(screen)
 
-	# Creating the rain one raindrop at a time
-	# cloud.createrain()
-
-
-	player.draw()
-	player.move()
-
-	#for raindrop in raindrops:
-	#	raindrop.move()
-	#	raindrop.draw()
 	for bullet in bullets:
 		bullet.move()
 		bullet.draw()
@@ -187,9 +164,6 @@ while 1:
 			if ship.collide(bullet):
 				bullets.remove(bullet)
 				ships.remove(ship)
-
-
-
 
 	for ship in ships:
 		ship.draw()
