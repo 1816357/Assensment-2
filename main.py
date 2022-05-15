@@ -24,6 +24,9 @@ stars_image_tr = pygame.transform.scale(stars_image, (SCREEN_WIDTH,SCREEN_HEIGHT
 
 player_image = pygame.image.load("Assets/avatar.png").convert()
 
+space = pygame.image.load("Assets/meteormaker.png").convert()
+sc_img = pygame.transform.scale(space, (960, 100))
+
 
 # image should not have been converted with convert_alpha(0 but with convert()
 player_image.set_colorkey((255,255,255))
@@ -118,7 +121,30 @@ class Bullet:
 	# def collides(self, player):
 	# 	return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
 
-Class Meteor:
+class Meteor:
+
+	def __init__(self, x, y):
+		self.x = x
+		self.y = y
+		self.speed = random.randint()
+
+	def move(self):
+		self.y += self.speed
+
+	def draw(self):
+		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), 2)
+
+class Asteroid:
+
+	def __int__(self, x, y):
+		self.x = x
+		self.y = y
+
+	def draw(self):
+		screen.blit(sc_img (self.x, self.y))
+
+	def createmeteor(self):
+		meteors.append(Meteor, )
 
 
 
@@ -126,6 +152,7 @@ Class Meteor:
 alienship = []
 bullets = []
 ships = []
+meteors = []
 
 for i in range(1, 10):
 	# ships.append(AlienShipOne(10 + (i * 75), -130, 1.5))
