@@ -9,7 +9,6 @@ SCREEN_HEIGHT = 540
 BACKGD_COLOUR = (230, 255, 250)
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
-
 enemy_image = pygame.image.load("Assets/enemy.png").convert_alpha()
 enemies_image_tr = pygame.transform.scale(enemy_image, (50,25))
 
@@ -25,12 +24,14 @@ stars_image_tr = pygame.transform.scale(stars_image, (SCREEN_WIDTH,SCREEN_HEIGHT
 
 player_image = pygame.image.load("Assets/avatar.png").convert()
 
+
 # image should not have been converted with convert_alpha(0 but with convert()
 player_image.set_colorkey((255,255,255))
 clock = pygame.time.Clock()
 
 Ui_font = pygame.font.SysFont("arial", 25)
 
+# Ship 1
 
 class AlienShipOne:
 	def __init__(self, x, y, spd):
@@ -51,14 +52,13 @@ class AlienShipOne:
 		screen.blit(enemies_image_tr, (self.x, self.y))
 
 	def createSpaceship(self):
-		alienship.append(Laser(random.randint(self.x, self.x+100), self.y+50))
+		alienship.append(Laser(random.randint(self.x, self.x+50), self.y+50))
 
 	def collide(self, bullet):
 		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((bullet.x, bullet.y))
 
 	def collides(self, ship):
 		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((ship.x, ship.y))
-
 
 
 
@@ -79,7 +79,7 @@ class Player(pygame.sprite.Sprite):
 			self.rect.x -= 5
 
 	def createbullet(self):
-		bullets.append(Bullet(self.rect.x + 30, self.rect.y))
+		bullets.append(Bullet(self.rect.x + 10, self.rect.y))
 
 
 
@@ -95,7 +95,7 @@ class Laser:
 		self.y += self.accel
 
 	def draw(self):
-		pygame.draw.circle(screen, (150,150,150), (self.x, self.y), 2)
+		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), 2)
 
 
 
@@ -110,22 +110,32 @@ class Bullet:
 		self.y -= 5
 
 	def draw(self):
-		pygame.draw.line(screen, (0,255,0), (self.x , self.y) ,(self.x , self.y - 10), 4)
+		pygame.draw.line(screen, (0, 255, 0), (self.x, self.y), (self.x, self.y - 10), 4)
 
 	def collide(self, ship):
-		return pygame.Rect (self.x,self.y, 50 ,50).collidepoint((ship.x, ship.y))
+		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((ship.x, ship.y))
 
-	def collides(self, player):
-		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
+	# def collides(self, player):
+	# 	return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
+
+Class Meteor:
+
+
 
 
 alienship = []
 bullets = []
 ships = []
 
-for i in range(1,10):
-	ships.append(AlienShipOne(10 + (i*75),0, 0.1))
-	ships.append(AlienShipOne(10 + (i*75),65, 0.1))
+for i in range(1, 10):
+	# ships.append(AlienShipOne(10 + (i * 75), -130, 1.5))
+	#
+	# ships.append(AlienShipOne(10 + (i * 75), -65, 1.5))
+
+	ships.append(AlienShipOne(10 + (i*75),0, 1.5))
+
+	# ships.append(AlienShipOne(10 + (i*75),65, 1.5))
+
 
 player = Player()
 
