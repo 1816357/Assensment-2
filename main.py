@@ -65,6 +65,7 @@ class AlienShipOne:
 
 
 
+
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
@@ -118,6 +119,10 @@ class Bullet:
 	def collide(self, ship):
 		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((ship.x, ship.y))
 
+
+	def collide(self, rok):
+		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((rok.x, rok.y))
+
 	# def collides(self, player):
 	# 	return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
 
@@ -132,7 +137,10 @@ class Meteor:
 		self.y += self.speed
 
 	def draw(self):
-		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), random.randint(30, 33))
+		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), 33)
+
+	def collide(self, rok):
+		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((rok.x, rok.y))
 
 class Asteroid:
 
@@ -144,7 +152,7 @@ class Asteroid:
 		screen.blit(sc_img, (self.x, self.y - 150))
 
 	def create_meteor(self):
-		meteors.append(Meteor(random.randint(self.x + 0, self.x + 30000), self.y + 250))
+		meteors.append(Meteor(random.randint(self.x + 0, self.x + 30000), self.y + 10))
 
 
 alienship = []
@@ -155,7 +163,7 @@ ships = []
 
 meteors = []
 
-rocks1 = Asteroid(10, 50)
+rocks1 = Asteroid(1, 5)
 
 for i in range(1, 10):
 	# ships.append(AlienShipOne(10 + (i * 75), -130, 1.5))
@@ -206,6 +214,11 @@ while 1:
 			if ship.collide(bullet):
 				bullets.remove(bullet)
 				ships.remove(ship)
+		for rok in meteors:
+			if rok.collide(bullet):
+				bullets.remove(bullet)
+				meteors.remove(rok)
+
 
 	for ship in ships:
 		ship.draw()
