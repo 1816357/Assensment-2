@@ -64,8 +64,7 @@ class AlienShipOne:
 		return pygame.Rect(self.x, self.y, 50, 50).collidepoint((ship.x, ship.y))
 
 
-
-
+# Player
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
@@ -82,12 +81,13 @@ class Player(pygame.sprite.Sprite):
 		if pressed_keys[K_LEFT] and self.rect.x > 0:
 			self.rect.x -= 5
 
+	def meteor_hit(self):
+		return pygame.Rect(self.rect.x, self.rect.y).collidepoint((rock))
+
 	def createbullet(self):
 		bullets.append(Bullet(self.rect.x + 10, self.rect.y))
 
-
-
-
+# Projectile
 class Laser:
 	def __init__(self, x, y):
 		self.x = x
@@ -100,8 +100,6 @@ class Laser:
 
 	def draw(self):
 		pygame.draw.circle(screen, (150, 150, 150), (self.x, self.y), 2)
-
-
 
 
 class Bullet:
@@ -126,6 +124,8 @@ class Bullet:
 	# def collides(self, player):
 	# 	return pygame.Rect(self.x, self.y, 50, 50).collidepoint((player.x, player.y))
 
+
+# Space Debris
 class Meteor:
 
 	def __init__(self, x, y):
@@ -227,6 +227,8 @@ while 1:
 	for rock in meteors:
 		rock.draw()
 		rock.move()
+		if player.meteor_hit():
+			print("HIT")
 
 	rocks1.draw()
 
