@@ -1,4 +1,4 @@
-import pygame, sys, random
+import pygame, sys, random, time
 from pygame.locals import *
 
 pygame.mixer.pre_init(44100, -16, 2, 2048)
@@ -23,6 +23,7 @@ stars_image_tr = pygame.transform.scale(stars_image, (SCREEN_WIDTH,SCREEN_HEIGHT
 
 
 player_image = pygame.image.load("Assets/avatar.png").convert()
+player_explosion = pygame.image.load("Assets/explosion.png").convert()
 
 space = pygame.image.load("Assets/meteormaker.png").convert()
 sc_img = pygame.transform.scale(space, (960, 100))
@@ -166,13 +167,12 @@ meteors = []
 rocks1 = Asteroid(1, 5)
 
 for i in range(1, 10):
-	# ships.append(AlienShipOne(10 + (i * 75), -130, 1.5))
-	#
-	# ships.append(AlienShipOne(10 + (i * 75), -65, 1.5))
+
+	ships.append(AlienShipOne(10 + (i * 75), -65, 1.5))
 
 	ships.append(AlienShipOne(10 + (i*75),0, 1.5))
 
-	# ships.append(AlienShipOne(10 + (i*75),65, 1.5))
+	ships.append(AlienShipOne(10 + (i*75),65, 1.5))
 
 
 player = Player()
@@ -228,7 +228,7 @@ while 1:
 		rock.draw()
 		rock.move()
 		if player.meteor_hit():
-			print("HIT")
+			print("Death")
 
 	rocks1.draw()
 
