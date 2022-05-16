@@ -82,7 +82,7 @@ class Player(pygame.sprite.Sprite):
 			self.rect.x -= 5
 
 	def meteor_hit(self):
-		return pygame.Rect(self.rect.x, self.rect.y).collidepoint((rock))
+		return pygame.Rect(self.rect.x, self.rect.y, 32, 32).collidepoint((rock.x, rock.y))
 
 	def createbullet(self):
 		bullets.append(Bullet(self.rect.x + 10, self.rect.y))
